@@ -1,3 +1,6 @@
+# Wolf
+*.crt
+
 # Logs
 logs
 *.log
