@@ -1,3 +1,5 @@
+![wolfSoc](res/wolf11.png)
+
 # BlueTeam
 Building a SOC for my home network  🛡️🗡️
 
@@ -25,7 +27,7 @@ chmod 777 -c $job_directory
 
 Now that you have write access, adjust the config file in `wolfSOC/thehive` and your containers can write into their `$job_directory`.
 
-Now up again, happy hunting!🍖
+Now up again, happy hunting!🏹
 ```bash
 docker compose up
 ```
