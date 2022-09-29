@@ -1,0 +1,74 @@
+version: "3"
+
+networks:
+  wolfsoc-network:
+    driver: bridge
+
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole:
+    container_name: pihole
+    networks:
+     - wolfsoc-network
+    image: pihole/pihole:latest
+    # For DHCP it is recommended to remove these ports and instead add: network_mode: "host"
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      # TZ: 'America/Chicago'
+      WEBPASSWORD: wolf # 'set a secure password here or it will be random'
+    # Volumes store your data between container upgrades
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'    
+    #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    cap_add:
+      - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+    restart: unless-stopped
+
+  # es01:
+  #   image: "docker.elastic.co/elasticsearch/elasticsearch:8.2.2"
+  #   container_name: es01
+  #   networks:
+  #    - wolfsoc-network
+  #   ports:
+  #   - "9200:9200"
+  #   - "9300:9300"
+  #   #volumes:
+  #   #- /labs/data/elasticsearch7:/usr/share/elasticsearch/data
+  #   #- /labs/data/etc/elasticsearch7/jvm.options:/usr/share/elasticsearch/config/jvm.options
+  #   #- /labs/data/etc/elasticsearch7/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  #   environment:
+  #     discovery.type: single-node
+  #     # Not sure about this one 👇🏾
+  #     elasticsearch: tag
+  #     # ES_JAVA_OPTS: "-Xms256m -Xmx256m"
+  #   #restart: on-failure
+
+  # kibana:
+  #   image: "docker.elastic.co/kibana/kibana:8.2.2"
+  #   container_name: kibana
+  #   networks:
+  #    - wolfsoc-network
+  #   ports:
+  #    - "5601:5601"
+  #   # environment:
+  #     # ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+  #   # depends_on:
+  #   #  - elasticsearch7
+  #   restart: on-failure
+  
+  # # cerebro:
+  # #   image: "lmenezes/cerebro"
+  # #   container_name: cerebro
+  # #   networks:
+  # #    - wolfsoc-network
+  # #   ports:
+  # #    - "8999:9000"
