@@ -14,7 +14,7 @@ Check the operator logs with:
 kubectl -n elastic-system logs -f statefulset.apps/elastic-operator
 ```
 
-Deply the stack:
+Deploy the stack:
 ```
 kubectl apply -f https://raw.githubusercontent.com/elastic/cloud-on-k8s/main/config/recipes/elastic-agent/fleet-kubernetes-integration.yaml
 ```

@@ -3,11 +3,11 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: tailscale
+  name: "{{ROLE_NAME}}"
 subjects:
-- kind: ServiceAccount
-  name: "{{SA_NAME}}"
+  - kind: ServiceAccount
+    name: "{{SA_NAME}}"
 roleRef:
   kind: Role
-  name: tailscale
+  name: "{{ROLE_NAME}}"
   apiGroup: rbac.authorization.k8s.io

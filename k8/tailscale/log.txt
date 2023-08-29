@@ -1,0 +1,12 @@
+role.rbac.authorization.k8s.io/tailscale-role-kibana unchanged
+rolebinding.rbac.authorization.k8s.io/tailscale-role-kibana unchanged
+serviceaccount/tailscale-kibana unchanged
+pod/tailscale-kibana created
+role.rbac.authorization.k8s.io/tailscale-role-elastic unchanged
+rolebinding.rbac.authorization.k8s.io/tailscale-role-elastic unchanged
+serviceaccount/tailscale-elastic unchanged
+pod/tailscale-elastic created
+role.rbac.authorization.k8s.io/tailscale-role-fleet unchanged
+rolebinding.rbac.authorization.k8s.io/tailscale-role-fleet unchanged
+serviceaccount/tailscale-fleet unchanged
+pod/tailscale-fleet created
