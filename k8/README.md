@@ -26,5 +26,23 @@ PASSWORD=$(kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.d
 
 ## Tailscale tunnel
 
-We tunnel each service through tailscale
+We tunnel each service through tailscale.
+
+For each service we deploy a proxy as described in the [tailscale docs](https://tailscale.com/kb/1185/kubernetes/).
+
+First create the `.env` with the necessary api keys.
+Then run the `deploy_proxies.py` script:
+```
+python3 deploy_proxies.py
+```
+
+Check the `log.txt` file for incommodities.
+Then run:
+```
+kubectl get pods
+```
+to check that all pods are running correctly.
+
+
+
 

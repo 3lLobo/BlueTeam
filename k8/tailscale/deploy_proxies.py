@@ -98,7 +98,7 @@ def get_auth_key(name: str) -> str:
 def main():
   """Main function"""
   names = ['kibana', 'elastic', 'fleet']
-  is_auth = False
+  is_auth = True
 
   for name in names:
     # Envs
