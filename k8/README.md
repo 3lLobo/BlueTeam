@@ -74,4 +74,7 @@ helm install k8 mojo2600/pihole -n pihole
 Similar game to the elastic proxy.
 We need to deploy a proxy for each piholes service.
 
-
+```bash
+python3 deploy_proxies.py k8-pihole-dhcp k8-pihole-dns-tcp k8-pihole-dns-udp k8-pihole-web -n pihole
+```
+Then check the logs of the new tailscale proxy pods and authenticate via the URL.
