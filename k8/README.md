@@ -44,5 +44,34 @@ kubectl get pods
 to check that all pods are running correctly.
 
 
+## PiHole 🍓
+
+Set up PiHole on K8 and use it as tailscale DNS server.
+This way we can resolve all services by name.
+Further gooddies are the ad blocking and DNS statistics.
+We follow [this random dudes blocq](https://greg.jeanmart.me/2020/04/13/self-host-pi-hole-on-kubernetes-and-block-ad/).
+
+### Steps
+> U need Helm!
+
+1. Create a `pihole` namespace.
+2. Create persistent volumes.
+3. Create the pv claim.
+4. Install PiHole with helm.
+
+```
+kubectl create namespace pihole
+kubectl apply -f pihole/pihole.persistentvolume.yaml
+kubectl apply -f pihole/pihole.persistentvolumeclaim.yaml
+
+helm repo add mojo2600 https://mojo2600.github.io/pihole-kubernetes/
+helm repo update
+helm install k8 mojo2600/pihole -n pihole
+```
+
+### TailScale proxy
+
+Similar game to the elastic proxy.
+We need to deploy a proxy for each piholes service.
 
 
