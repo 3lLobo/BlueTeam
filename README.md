@@ -4,6 +4,10 @@
 Building a SOC for my home network  🛡️🗡️
 
 
+## SOC + tunnel
+
+Follow steps in [K8](k8/)
+
 # Docker-all
 
 Docker for all your needs.
