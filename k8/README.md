@@ -24,7 +24,26 @@ Get the elastic pwd with:
 PASSWORD=$(kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
 ```
 
-## Tailscale tunnel
+## Tailscale operator
+
+Apply a k8 operator which enables ingress routes to expose services on the tailscale network.
+Follow [this tutorial](https://tailscale.com/kb/1215/oauth-clients#setting-up-an-oauth-client).
+
+1. Craete an OAuth id on the admin console.
+2. Store the id and secret in the `.env`.
+3. Deploy the operator
+```bash
+cd tailscale
+make operator | kubectl apply -f-
+```
+4. Deploy an Ingress-controler
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
+```
+5. 
+
+
+## Tailscale tunnel [depreciated]
 
 We tunnel each service through tailscale.
 
