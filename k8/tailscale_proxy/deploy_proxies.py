@@ -14,7 +14,8 @@ dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
 print(f"Loading .env from:\n {dotenv_path}\n\n")
 load_dotenv(dotenv_path)
 
-K8_HOST = os.environ.get("K8_HOST", "https://localhost:6443")
+# K8 config
+k8s.config.load_kube_config()
 
 # ipv4 regex
 ip_v4_regex = r"(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}"
@@ -68,9 +69,7 @@ def get_svc_ip(name: str, namespace: str) -> str:
     Returns:
         str: Cluster ip
     """
-    k8_conf = k8s.client.Configuration()
-    k8_conf.host = K8_HOST
-    v1 = k8s.client.CoreV1Api(api_client=k8s.client.ApiClient(k8_conf))
+    v1 = k8s.client.CoreV1Api()
     # Get all services
     svc_all = v1.list_namespaced_service(namespace)
     # Get the service
@@ -78,10 +77,15 @@ def get_svc_ip(name: str, namespace: str) -> str:
     if len(svc) == 0:
         raise Exception(f"Service {name} not found in namespace {namespace}")
     elif len(svc) > 1:
-        raise Exception(
-            f"Multiple services found for {name} in namespace {namespace}\
-              \names: {[s.metadata.name for s in svc]}"
-        )
+        # Ask user to choose
+        print(f"Found multiple services with name {name}")
+        print("Please choose one:")
+        for i, s in enumerate(svc):
+            print(f"{i}: {s.metadata.name}\t{s.spec.cluster_ip}\t{s.spec.type}")
+        choice = int(input())
+        assert choice.isdigit()
+        assert int(choice) < len(svc)
+        svc = svc[choice]
     else:
         svc = svc[0]
     # Get the cluster ip
