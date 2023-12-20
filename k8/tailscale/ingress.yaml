@@ -5,26 +5,35 @@ metadata:
 spec:
   ingressClassName: tailscale
   rules:
-  - host: "kibana"
+    - host: "elasticsearch-es-http.default.svc"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: elasticsearch-es-http
+                port:
+                  number: 9200
 
-  - host: "elasticsearch"
+    - host: "kibana-kb-http.default.svc"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kibana-kb-http
+                port:
+                  number: 5601
 
-  - host: "fleet"
-
-
-  # - http:
-  #     paths:
-  #     - path: /
-  #       pathType: Prefix
-  #       backend:
-  #         service:
-  #           name: ui-svc
-  #           port:
-  #             number: 80
-  #     - path: /api
-  #       pathType: Prefix
-  #       backend:
-  #         service:
-  #           name: api-svc
-  #           port:
-  #             number: 80
+    - host: "https://fleet-server-agent-http.default.svc"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: fleet-server-agent-http
+                port:
+                  number: 8220
