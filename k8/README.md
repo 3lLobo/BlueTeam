@@ -24,26 +24,28 @@ Get the elastic pwd with:
 PASSWORD=$(kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
 ```
 
-## Tailscale operator
+## Tailscale operator 
+
+> Only works with internal http traffic!
 
 Apply a k8 operator which enables ingress routes to expose services on the tailscale network.
 Follow [this tutorial](https://tailscale.com/kb/1215/oauth-clients#setting-up-an-oauth-client).
 
-1. Craete an OAuth id on the admin console.
+1. Create an OAuth id on the admin console.
 2. Store the id and secret in the `.env`.
 3. Deploy the operator
 ```bash
 cd tailscale
 make operator | kubectl apply -f-
 ```
-4. Deploy an Ingress-controler
+4. Deploy an Ingress-controller
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.8.2/deploy/static/provider/cloud/deploy.yaml
 ```
 5. 
 
 
-## Tailscale tunnel [depreciated]
+## Tailscale tunnel 
 
 We tunnel each service through tailscale.
 
@@ -52,10 +54,10 @@ For each service we deploy a proxy as described in the [tailscale docs](https://
 First create the `.env` with the necessary api keys.
 Then run the `deploy_proxies.py` script:
 ```
-python3 deploy_proxies.py
+python3 deploy_proxies.py elasticsearch kibana fleet
 ```
 
-Check the `log.txt` file for incommodities.
+Check the `log.txt` file for incommodity.
 Then run:
 ```
 kubectl get pods
