@@ -82,10 +82,10 @@ def get_svc_ip(name: str, namespace: str) -> str:
         print("Please choose one:")
         for i, s in enumerate(svc):
             print(f"{i}: {s.metadata.name}\t{s.spec.cluster_ip}\t{s.spec.type}")
-        choice = int(input())
+        choice = input()
         assert choice.isdigit()
         assert int(choice) < len(svc)
-        svc = svc[choice]
+        svc = svc[int(choice)]
     else:
         svc = svc[0]
     # Get the cluster ip
