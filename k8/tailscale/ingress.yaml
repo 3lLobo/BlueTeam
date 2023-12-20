@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: eck_ingress
+spec:
+  ingressClassName: tailscale
+  rules:
+  - host: "kibana"
+
+  - host: "elasticsearch"
+
+  - host: "fleet"
+
+
+  # - http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: ui-svc
+  #           port:
+  #             number: 80
+  #     - path: /api
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: api-svc
+  #           port:
+  #             number: 80
