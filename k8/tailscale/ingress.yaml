@@ -15,6 +15,7 @@ spec:
                 name: elasticsearch-es-http
                 port:
                   number: 9200
+                  name: https
 
     - host: "kibana-kb-http.default.svc"
       http:
@@ -26,6 +27,7 @@ spec:
                 name: kibana-kb-http
                 port:
                   number: 5601
+                  name: https
 
     - host: "https://fleet-server-agent-http.default.svc"
       http:
@@ -37,3 +39,4 @@ spec:
                 name: fleet-server-agent-http
                 port:
                   number: 8220
+                  name: https
