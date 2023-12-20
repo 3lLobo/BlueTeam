@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: eck_ingress
+  name: tailscale-ingress
 spec:
   ingressClassName: tailscale
   rules:
@@ -15,7 +15,7 @@ spec:
                 name: elasticsearch-es-http
                 port:
                   number: 9200
-                  name: https
+                  # name: https
 
     - host: "kibana-kb-http.default.svc"
       http:
@@ -27,9 +27,9 @@ spec:
                 name: kibana-kb-http
                 port:
                   number: 5601
-                  name: https
+                  # name: https
 
-    - host: "https://fleet-server-agent-http.default.svc"
+    - host: "fleet-server-agent-http.default.svc"
       http:
         paths:
           - path: /
@@ -39,4 +39,4 @@ spec:
                 name: fleet-server-agent-http
                 port:
                   number: 8220
-                  name: https
+                  # name: https
