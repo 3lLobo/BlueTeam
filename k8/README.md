@@ -4,8 +4,8 @@
 
 Following [these](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-deploy-eck.html) docs, first apply `crds` and `operator`:
 ```
-kubectl create -f https://download.elastic.co/downloads/eck/2.10.0/crds.yaml 
-kubectl apply -f https://download.elastic.co/downloads/eck/2.10.0/operator.yaml
+kubectl create -f https://download.elastic.co/downloads/eck/2.11.0/crds.yaml 
+kubectl apply -f https://download.elastic.co/downloads/eck/2.11.0/operator.yaml
 
 ```
 
@@ -24,7 +24,7 @@ Get the elastic pwd with:
 PASSWORD=$(kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
 ```
 
-## Tailscale tunnel
+### Tailscale tunnel
 
 We tunnel each service through tailscale.
 
@@ -42,6 +42,17 @@ Then run:
 kubectl get pods
 ```
 to check that all pods are running correctly.
+
+### MiniKube ingress
+
+Install the ingress pluggins first:
+```bash
+minikube addons enable ingress
+minikube addons enable ingress-dns
+```
+Then [set up dnsq](https://minikube.sigs.k8s.io/docs/handbook/addons/ingress-dns/) on your machine.
+
+Now apply the ingress file.
 
 
 ## PiHole 🍓
