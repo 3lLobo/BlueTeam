@@ -1,5 +1,25 @@
 # Wolf SOC on k8
 
+<!-- ## Elastic with Traefic ingress
+
+Install Traefik stuff:
+```bash
+# Install Traefik Resource Definitions:
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
+
+# Install RBAC for Traefik:
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml
+```
+Now cert-manager:
+```bash
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.3/cert-manager.yaml
+```
+
+
+
+Download the example from [here](https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2Felastic%2Fcloud-on-k8s%2Ftree%2Fmain%2Fconfig%2Frecipes%2Ftraefik). -->
+
+
 ## Elastic
 
 Following [these](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-deploy-eck.html) docs, first apply `crds` and `operator`:
@@ -23,6 +43,19 @@ Get the elastic pwd with:
 ```
 PASSWORD=$(kubectl get secret elasticsearch-es-elastic-user -o go-template='{{.data.elastic | base64decode}}')
 ```
+
+### NodePorts
+
+Apply the `nodeport-svc.yaml` and let Minikube bind the ports to the host:
+```bash
+minikube service --all --url
+```
+
+### IP tables
+
+TODO: Route the incoming traffic to the minikube ip.
+
+
 
 ### Tailscale tunnel
 
