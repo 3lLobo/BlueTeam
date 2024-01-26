@@ -25,6 +25,6 @@ services:
       - 9300:9300
     volumes:
       - traefik-log:/var/log/traefik
-      - ./traefik.toml:/etc/traefik/traefik.toml
+      - ./traefik:/etc/traefik
 
     
