@@ -1,0 +1,30 @@
+version: '3.9'
+
+volumes:
+  traefik-log:
+    external: true
+
+networks:
+  minikube:
+    external: true
+
+services:
+  traefik-proxy:
+    image: traefik:v2.10
+    container_name: traefik-proxy
+    networks:
+      - minikube
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+      - 5601:5601
+      - 8200:8200
+      - 8220:8220
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - traefik-log:/var/log/traefik
+      - ./traefik.toml:/etc/traefik/traefik.toml
+
+    
