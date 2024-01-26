@@ -1,15 +1,14 @@
 stream {
-  set nvar_minikubeip $MINIKUBE_IP;
   server {
     listen 80;
-    proxy_pass nvar_minikubeip;
+    proxy_pass $MINIKUBE_IP;
   }
   server {
     listen 5601;
-    proxy_pass nvar_minikubeip:$KIBANA_PORT;
+    proxy_pass $MINIKUBE_IP:$KIBANA_PORT;
   }
   server {
     listen 9200;
-    proxy_pass nvar_minikubeip:$ELASTICSEARCH_PORT;
+    proxy_pass $MINIKUBE_IP:$ELASTICSEARCH_PORT;
   }
 }
