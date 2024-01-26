@@ -22,7 +22,16 @@ services:
       - 9200:9200
       - 9300:9300
     volumes:
-      - ./nginx:/etc/nginx
+      - ./nginx:/etc/nginx/conf.d
       - nginx-log:/var/log/nginx
     networks:
       - minikube
+    environment:
+      # --with-stream 
+      - NGINX_STREAM_SSL_PREREAD_PROXY_PROTOCOL=true
+    entrypoint: ["nginx", "-g", "--with-stream ", "daemon off;"]
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:80"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
