@@ -1,9 +1,5 @@
 stream {
   server {
-    listen 80;
-    proxy_pass $MINIKUBE_IP;
-  }
-  server {
     listen 5601;
     proxy_pass $MINIKUBE_IP:$KIBANA_PORT;
   }
