@@ -1,0 +1,56 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: elasticsearch-ingress
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Port(`5601`)
+      kind: Rule
+      services:
+        - name: kibana-kb-http
+          port: 5601
+          scheme: https
+      # middlewares:
+      #   - name: kibana-https-redirect
+    - match: Port(`9200`)
+      kind: Rule
+      services:
+        - name: elasticsearch-es-http
+          port: 9200
+          scheme: https
+      # middlewares:
+      #   - name: elasticsearch-https-redirect
+    - match: Port(`8220`)
+      kind: Rule
+      services:
+        - name: fleet-server-agent-http
+          port: 8220
+          scheme: https
+      # middlewares:
+      #   - name: fleet-server-https-redirect
+    - match: Port(`9300`)
+      kind: Rule
+      services:
+        - name: elasticsearch-es-transport
+          port: 9300
+      # middlewares:
+      #   - name: elasticsearch-https-redirect
+    - match: Port('8200')
+      kind: Rule
+      services:
+        - name: apm-server-apm-http
+          port: 8200
+          scheme: https
+      # middlewares:
+      #   - name: apm-server-https-redirect
+  tls:
+    secretName: wolf-certs
+    domains:
+      - sans:
+        - "blueteam.wolf"
+        - "elasticsearch.wolf"
+        - "kibana.wolf"
+        - "fleet.wolf"
+        - "apm.wolf"
