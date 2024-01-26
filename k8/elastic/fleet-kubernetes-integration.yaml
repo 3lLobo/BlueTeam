@@ -19,6 +19,8 @@ spec:
       version: latest
     - name: kubernetes
       version: latest
+    - name: apm
+      version: latest
     xpack.fleet.agentPolicies:
     - name: Fleet Server on ECK policy
       id: eck-fleet-server
@@ -58,6 +60,16 @@ spec:
     count: 3
     config:
       node.store.allow_mmap: false
+---
+apiVersion: apm.k8s.elastic.co/v1
+kind: ApmServer
+metadata:
+  name: apm-server
+spec:
+  version: 8.12.0
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
 ---
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
