@@ -1,0 +1,36 @@
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    ssl_session_cache   shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    map nvar_server_port nvar_proxy_port {
+        default 443;
+        5601 $KIBANA_PORT;
+        9200 $ELASTICSEARCH_PORT;
+        9300 $ES_TRANSPORT_PORT;
+        8200 $APM_SERVER_PORT;
+        8220 $FLEET_SERVER_PORT;
+    }
+
+    server {
+        listen 5601 ssl;
+        listen 9200 ssl;
+        listen 9300 ssl;
+        listen 8200 ssl;
+        listen 8220 ssl;
+
+        server_name localhost;
+
+        ssl_certificate /etc/nginx/ssl/localhost.crt;
+        ssl_certificate_key /etc/nginx/ssl/localhost.key;
+
+        location / {
+            proxy_pass https://192.168.49.2:nvar_proxy_port;
+        }
+    }
+}
