@@ -16,7 +16,7 @@ sudo systemctl enable auditd --now
 Add rules from [Neo23x0/auditd](https://github.com/Neo23x0/auditd/blob/master/audit.rules):
   
 ```bash
-sudo curl -O /etc/audit/rules.d/audit.rules https://raw.githubusercontent.com/Neo23x0/auditd/master/audit.rules
+sudo curl -o /etc/audit/rules.d/audit.rules https://raw.githubusercontent.com/Neo23x0/auditd/master/audit.rules
 sudo systemctl restart auditd
 ```
 
