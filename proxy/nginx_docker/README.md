@@ -33,3 +33,9 @@ Good old:
 ```bash
 docker-compose up
 ```
+
+Read the logs:
+```bash
+docker exec nginx  tail -f /var/log/nginx/nginx-access.log
+```
+
