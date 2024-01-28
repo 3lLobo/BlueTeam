@@ -1,0 +1,16 @@
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+stream {
+  server {
+    listen 5601;
+    proxy_pass $MINIKUBE_IP:$KIBANA_PORT;
+  }
+  server {
+    listen 9200;
+    proxy_pass $MINIKUBE_IP:$ELASTICSEARCH_PORT;
+  }
+}

@@ -1,0 +1,43 @@
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    ssl_session_cache   shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    map nvar_server_port nvar_proxy_port {
+        default 443;
+        5601 $KIBANA_PORT;
+        9200 $ELASTICSEARCH_PORT;
+        9300 $ES_TRANSPORT_PORT;
+        8200 $APM_SERVER_PORT;
+        8220 $FLEET_SERVER_PORT;
+    }
+
+    log_format compression 'nvar_remote_addr - nvar_remote_user [nvar_time_local] '
+                           '"nvar_request" nvar_status nvar_body_bytes_sent '
+                           '"nvar_http_referer" "nvar_http_user_agent" "nvar_gzip_ratio"';
+
+    server {
+        gzip on;
+        access_log /var/log/nginx/nginx-access.log compression;
+
+        listen 5601 ssl;
+        listen 9200 ssl;
+        listen 9300 ssl;
+        listen 8200 ssl;
+        listen 8220 ssl;
+
+        server_name $SERVER_NAME;
+
+        ssl_certificate /etc/nginx/ssl/$SERVER_NAME.crt;
+        ssl_certificate_key /etc/nginx/ssl/$SERVER_NAME.key;
+
+        location / {
+            proxy_pass https://192.168.49.2:nvar_proxy_port;
+        }
+    }
+}

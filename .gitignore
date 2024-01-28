@@ -1,3 +1,4 @@
 .env
 .venv/
 log.txt
+nginx.conf

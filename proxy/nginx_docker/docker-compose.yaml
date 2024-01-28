@@ -1,0 +1,30 @@
+version: '3.9'
+
+volumes:
+  nginx-log:
+    external: true
+
+networks:
+  minikube:
+    external: true
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      # - 80:80
+      # - 443:443
+      - 5601:5601
+      - 8200:8200
+      - 8220:8220
+      - 9200:9200 
+      - 9300:9300
+    volumes:
+      - ./nginx:/etc/nginx
+      - nginx-log:/var/log/nginx
+    networks:
+      - minikube
+    env_file:
+      - ./.env
