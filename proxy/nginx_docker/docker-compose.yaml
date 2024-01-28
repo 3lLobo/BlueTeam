@@ -25,6 +25,8 @@ services:
       - ./nginx:/etc/nginx
       - nginx-log:/var/log/nginx
     networks:
-      - minikube
+      minikube:
+        ipv4_address:
+          ${NGINX_MINI_IP}
     env_file:
       - ./.env
