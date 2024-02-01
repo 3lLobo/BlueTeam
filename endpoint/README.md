@@ -9,7 +9,7 @@ Security pracitces for your machine.
 Install auditd:
 
 ```bash
-sudo apt install auditd
+sudo apt install auditd -y
 sudo systemctl enable auditd --now
 ```
 
