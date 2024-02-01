@@ -10,6 +10,7 @@ Place the files in the `nginx/ssl` folder.
 ## Config
 
 Populate the `.env` file.
+Set a static IP for the nginx container, different from `minikube ip`.
 Generate the `nginx.conf` from the one of the templates.
   
 ```bash
