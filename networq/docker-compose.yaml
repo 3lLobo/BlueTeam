@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  suricata:
+    image: jasonish/suricata:latest
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_NICE
+    network_mode: host
+    volumes:
+      - ./suricata/config:/etc/suricata
+      - ./suricata/logs:/var/log/suricata
+      - ./suricata/rules:/var/lib/suricata/rules
+      - ./suricata/pcap:/var/lib/suricata/pcap
+    env_file: .env      
+    entrypoint: suricata -i $MON_IF
+    restart: unless-stopped

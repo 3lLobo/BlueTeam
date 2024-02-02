@@ -37,6 +37,18 @@ Fine [detection rules](https://gist.githubusercontent.com/jgautheron/0bcd25e763b
 
 Alexandira [library of rules](https://github.com/klingerko/nids-rule-library?tab=readme-ov-file).
 
+Automate the download of rules with [suricata-update](https://suricata-update.readthedocs.io/en/latest/).
+
+```bash
+docker exec -it <container> suricata-update
+	suricata-update enable-source <source>
+	suricata-update add-source <source> <url>
+	suricata-update
+```
+
+
+
+
 ### Suricata-Update
 
 Once new rules are added, suricata needs to update.
