@@ -3,14 +3,22 @@
 
 ## Monitor traffic
 
-Mirror traffic to your server on interface <ethX>
+All in- and outgoing traffic of the home network can be mirrored at gateway level.
+Check if your router supports port mirroring. Optionally, use a managed switch.
+Route the mirrored traffic to a server and monitor the interface.
+You will capture the real traffic going into the wyld.
+
+
+Assuming the interface receiving the mirror traffic is <ethX>.
 
 Set promisc mode on:
 ```bash
-sudo ifconfig ethX promisc
+sudo ifconfig <ethX> promisc
 ```
 
-## Suricata - docker
+## Suricata
+
+### Docker
 
 Can we do this from a container? ☑️
 
@@ -23,10 +31,27 @@ docker run --rm -d --net=host \
 				jasonish/suricata:latest -i <ethX>
 ```
 
+### Rules
+
 Fine [detection rules](https://gist.githubusercontent.com/jgautheron/0bcd25e763b42ba338fc22eb208885f1/raw/8a24f482e0e6a710ca78c25275b3657c6b994c43/protoanomalies.rules).
 
-
 Alexandira [library of rules](https://github.com/klingerko/nids-rule-library?tab=readme-ov-file).
+
+### Suricata-Update
+
+Once new rules are added, suricata needs to update.
+
+On Metal:
+```bash
+sudo apt install suricata-update
+sudo suricata-update
+```
+
+On Docker:
+```bash
+docker exec -d <container> suricata-update
+```
+
 
 ## Zeek
 
@@ -62,4 +87,5 @@ WantedBy=multi-user.target
 ```bash
 sudo systemctl enable zeek.service --now
 ```
+
 
