@@ -26,5 +26,8 @@ docker run --rm -d --net=host \
 
 Fine [detection rules](https://gist.githubusercontent.com/jgautheron/0bcd25e763b42ba338fc22eb208885f1/raw/8a24f482e0e6a710ca78c25275b3657c6b994c43/protoanomalies.rules).
 
+
+Alexandira [library of rules](https://github.com/klingerko/nids-rule-library?tab=readme-ov-file).
+
 ## Zeek
 
