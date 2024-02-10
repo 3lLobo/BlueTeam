@@ -11,9 +11,11 @@ You will capture the real traffic going into the wyld.
 
 Assuming the interface receiving the mirror traffic is <ethX>.
 
-Set promisc mode on:
 ```bash
+# promisc mode on
 sudo ifconfig <ethX> promisc
+# silence the interface
+sudo eptables -A OUTPUT -o <ethX> -j DROP
 ```
 
 ## Suricata

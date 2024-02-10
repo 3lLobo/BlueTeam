@@ -17,13 +17,19 @@ http {
         8220 $FLEET_SERVER_PORT;
     }
 
-    log_format compression 'nvar_remote_addr - nvar_remote_user [nvar_time_local] '
-                           '"nvar_request" nvar_status nvar_body_bytes_sent '
-                           '"nvar_http_referer" "nvar_http_user_agent" "nvar_gzip_ratio"';
+    map nvar_server_port nvar_proxy_ip {
+    	default $MINIKUBE_IP;
+        8200	$SERVER_NAME;
+        8220	$SERVER_NAME;
+    }
+
+    # log_format compression 'nvar_remote_addr - nvar_remote_user [nvar_time_local] '
+    #                        '"nvar_request" nvar_status nvar_body_bytes_sent '
+    #                        '"nvar_http_referer" "nvar_http_user_agent" "nvar_gzip_ratio"';
 
     server {
         gzip on;
-        access_log /var/log/nginx/nginx-access.log compression;
+        # access_log /var/log/nginx/nginx-access.log compression;
 
         listen 5601 ssl;
         listen 9200 ssl;
@@ -37,7 +43,7 @@ http {
         ssl_certificate_key /etc/nginx/ssl/$SERVER_NAME.key;
 
         location / {
-            proxy_pass https://192.168.49.2:nvar_proxy_port;
+            proxy_pass https://nvar_proxy_ip:nvar_proxy_port;
         }
     }
 }
